@@ -32,17 +32,16 @@ export default {
   created() {
     try {
       this.$axios
-          .get('http://localhost:8989/api/products')
+          .get('http://localhost:8989/api/brands')
           .then((res) => {
             if (res.status == 200) {
               this.products = res.data.data;
-              this.$toast.info(`API esta rodando`);
             } else {
               this.$toast.warning(`OOPS! Desculpe, estamos com algum problema`);
             }
           })
           .catch(err => {
-            this.$toast.error('OOOPS! Tivemos algum problema, não foi possível listar os produtos!');
+            this.$toast.error('OOOPS! Tivemos algum problema, não foi possível listar as marcas!');
             if (err.response) {
               console.log(err.response.status);
             }
@@ -54,8 +53,8 @@ export default {
             }
           })
     } catch (err) {
-      this.$toast.error('OOOPS! Tivemos algum problema, não foi possível listar os produtos!');
-      console.log('Erro ao tentar exibir produtos: ' + err);
+      this.$toast.error('OOOPS! Tivemos algum problema, não foi possível listar as marcas!');
+      console.log('Erro ao tentar exibir marcas: ' + err);
     }
   },
 }
