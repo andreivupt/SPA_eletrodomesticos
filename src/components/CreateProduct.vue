@@ -42,7 +42,7 @@
         </div>
 
         <div class="mt-4">
-          <button type="submit" class="btn btn-outline-primary btn-sm">Atualizar</button>
+          <button type="submit" class="btn btn-outline-primary btn-sm">Salvar</button>
         </div>
 
       </div>

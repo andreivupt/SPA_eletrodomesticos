@@ -20,6 +20,11 @@ const routes = [
         path: '/edit/:id',
         component: EditProduct
     },
+    {
+        name: 'brands',
+        path: '/brands',
+        component: EditProduct
+    },
 ];
 
 const router = createRouter({

@@ -68,18 +68,40 @@ export default {
             this.product = res.data.data;
           });
     } catch (err) {
-      alert('Erro ao tentar editar produto');
+      alert('Erro ao tentar exibir produto');
     }
 
   },
   methods: {
     updateProduct() {
-      this.$axios
-          .put(`http://localhost:8989/api/product/${this.$route.params.id}`, this.product)
-          .then((res) => {
-            console.log(res)
-            this.$router.push({ name: 'home' });
-          });
+      try {
+        this.$axios
+            .put(`http://localhost:8989/api/product/${this.$route.params.id}`, this.product)
+            .then((res) => {
+              if (res.status == 200) {
+                this.$router.push({ name: 'home' });
+                this.$toast.success('Maravilha! Tudo certo com a edição do produto!');
+              } else {
+                this.$toast.warning('OOOPS! Tivemos algum problema, não foi possível editar o produto!');
+              }
+            })
+            .catch(err => {
+              this.$toast.error('OOOPS! Tivemos algum problema, não foi possível editar o produto! Verifique se todos os campos foram preenchidos e os valores informados');
+              if (err.response) {
+                console.log(err.response.status);
+              }
+              else if (err.request) {
+                console.log(err.request);
+              }
+              else {
+                console.log(err.message);
+              }
+            });
+      } catch (err) {
+        console.log('Erro ao tentar editar o produto: ' + err);
+        this.$toast.error('OOOPS! Tivemos algum problema, não foi possível editar o produto!');
+      }
+
     }
   }
 }

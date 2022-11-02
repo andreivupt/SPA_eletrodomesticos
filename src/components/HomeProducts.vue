@@ -9,24 +9,22 @@
           <div class="card mb-2">
             <div class="card-header">
               <span># {{ product.NM_CODE }}</span>
-              <div class="position-absolute top-0 end-0">
-                <button type="button" class="btn-close" aria-label="Close"></button>
-              </div>
             </div>
 
             <div class="card-body">
               <h5 class="card-title">{{ product.DS_NAME }}</h5>
               <h6 class="card-subtitle mb-2 text-muted">{{ product.DS_BRAND }}</h6>
+              <div class="card-item">{{ product.DS_DESCRIPTION }}</div>
               <div class="card-item">
-                {{ product.DS_DESCRIPTION }}
-              </div>
-              <div class="card-item mb-4">
                 <span>Voltagem: </span> {{ product.NM_TENSION }}
+              </div>
+              <div class="card-item py-4">
+                <strong>$ {{ product.NM_VALUE }}</strong>
               </div>
               <div class="row">
                 <div class="btn-group" role="group">
-                  <router-link :to="{name: 'edit', params: { id: product.id }}" class="btn btn-success">Edit</router-link>
-                  <button class="btn btn-danger" @click="deleteProduct(product.id)">Delete</button>
+                  <router-link :to="{name: 'edit', params: { id: product.id }}" class="btn btn-success">Alterar informações</router-link>
+                  <button class="btn btn-danger" @click="deleteProduct(product.id)">Remover</button>
                 </div>
               </div>
             </div>
@@ -51,10 +49,28 @@ export default {
       this.$axios
           .get('http://localhost:8989/api/products')
           .then((res) => {
-            this.products = res.data.data;
+            if (res.status == 200) {
+              this.products = res.data.data;
+              this.$toast.info(`API esta rodando`);
+            } else {
+              this.$toast.warning(`OOPS! Desculpe, estamos com algum problema`);
+            }
+          })
+          .catch(err => {
+            this.$toast.error('OOOPS! Tivemos algum problema, não foi possível listar os produtos!');
+            if (err.response) {
+              console.log(err.response.status);
+            }
+            else if (err.request) {
+              console.log(err.request);
+            }
+            else {
+              console.log(err.message);
+            }
           })
     } catch (err) {
-      alert('Erro ao tentar exibir produtos');
+      this.$toast.error('OOOPS! Tivemos algum problema, não foi possível listar os produtos!');
+      console.log('Erro ao tentar exibir produtos: ' + err);
     }
   },
   methods: {
@@ -62,12 +78,26 @@ export default {
       try {
         this.$axios
             .delete(`http://localhost:8989/api/product/${id}`)
-            .then(response => {
-              console.log(response)
-              this.$router.push({name: 'home'})
-            });
+            .then(res => {
+              console.log(res);
+              this.$router.push({name: 'home'});
+              this.$toast.success('SHOW! Temos um novo produto cadastrado!');
+            })
+            .catch(err => {
+              this.$toast.error('OOOPS! Tivemos algum problema, não foi possível deletar o produto!');
+              if (err.response) {
+                console.log(err.response.status);
+              }
+              else if (err.request) {
+                console.log(err.request);
+              }
+              else {
+                console.log(err.message);
+              }
+            })
       } catch (err) {
-        alert('Erro ao tentar excluir produto');
+        this.$toast.error('OOOPS! Tivemos algum problema, não foi possível deletar o produto!');
+        console.log('Erro ao tentar excluir produto' + err);
       }
     }
   }
