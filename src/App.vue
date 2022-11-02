@@ -6,7 +6,7 @@
         <div class="navbar-collapse">
           <div class="navbar-nav">
             <router-link to="/" class="nav-item nav-link">Listar Produtos  &nbsp;|</router-link>
-            <router-link to="/create" class="nav-item nav-link">Criar Produto</router-link>
+            <router-link to="/create" class="nav-item nav-link">Criar Produto  &nbsp;|</router-link>
             <router-link to="/brands" class="nav-item nav-link">Listar Marcas</router-link>
           </div>
         </div>

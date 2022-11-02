@@ -3,6 +3,7 @@ import { createRouter , createWebHistory } from 'vue-router'
 import HomeProducts from "@/components/HomeProducts";
 import EditProduct from "@/components/EditProduct";
 import CreateProduct from "@/components/CreateProduct";
+import ListBrands from "@/components/ListBrands";
 
 const routes = [
     {
@@ -23,7 +24,7 @@ const routes = [
     {
         name: 'brands',
         path: '/brands',
-        component: EditProduct
+        component: ListBrands
     },
 ];
 
